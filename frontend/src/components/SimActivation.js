@@ -10,15 +10,23 @@ const SimActivation = () => {
     const API_URL = 'https://sim-6iwp.onrender.com/api/sims';
 
     const handleActivate = async () => {
+        if (!phoneNumber) {
+            setMessage('Phone number is required.');
+            return; // Exit early if phone number is not provided
+        }
+
         try {
+            // Check if the SIM exists by phone number
             const response = await axios.get(`${API_URL}/phone/${phoneNumber}`);
             if (response.data) {
+                // If it exists, activate the SIM
                 const simResponse = await axios.post(`${API_URL}/activate`, { simNumber: response.data.simNumber });
                 setMessage(`SIM activated successfully: ${simResponse.data.simNumber}`);
                 fetchSimDetails(phoneNumber);
             }
         } catch (error) {
             if (error.response && error.response.status === 404) {
+                // If not found, create a new SIM and activate it
                 const newSim = {
                     simNumber: generateSimNumber(),
                     phoneNumber: phoneNumber,
@@ -38,19 +46,6 @@ const SimActivation = () => {
         }
     };
 
-    const handleDeactivate = async () => {
-        try {
-            const response = await axios.get(`${API_URL}/phone/${phoneNumber}`);
-            if (response.data) {
-                const simResponse = await axios.post(`${API_URL}/deactivate`, { simNumber: response.data.simNumber });
-                setMessage(`SIM deactivated successfully: ${simResponse.data.simNumber}`);
-                fetchSimDetails(phoneNumber);
-            }
-        } catch (error) {
-            setMessage(`Error: ${error.response ? error.response.data.error : error.message}`);
-        }
-    };
-
     const fetchSimDetails = async (phoneNumber) => {
         try {
             const response = await axios.get(`${API_URL}/phone/${phoneNumber}`);
@@ -67,7 +62,7 @@ const SimActivation = () => {
 
     return (
         <div>
-            <h2>Activate / Deactivate SIM</h2>
+            <h2>Activate SIM</h2>
             <input
                 type="text"
                 value={phoneNumber}
@@ -75,7 +70,6 @@ const SimActivation = () => {
                 placeholder="Enter Phone Number"
             />
             <button onClick={handleActivate}>Activate SIM</button>
-            <button onClick={handleDeactivate}>Deactivate SIM</button>
             {message && <p>{message}</p>}
             {simDetails && (
                 <div>
