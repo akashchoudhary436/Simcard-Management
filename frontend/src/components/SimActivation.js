@@ -8,7 +8,7 @@ const SimActivation = () => {
     const [simDetails, setSimDetails] = useState(null);
 
     const handleActivate = async () => {
-        const REACT_APP_API_URL = process.env.REACT_APP_REACT_APP_API_URL;
+        const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
         try {
             const response = await axios.get(`${REACT_APP_API_URL}/phone/${phoneNumber}`);
             if (response.data) {
@@ -38,7 +38,7 @@ const SimActivation = () => {
     };
 
     const handleDeactivate = async () => {
-        const REACT_APP_API_URL = process.env.REACT_APP_REACT_APP_API_URL;
+        const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
         try {
             const response = await axios.get(`${REACT_APP_API_URL}/phone/${phoneNumber}`);
             if (response.data) {
@@ -52,7 +52,7 @@ const SimActivation = () => {
     };
 
     const fetchSimDetails = async (phoneNumber) => {
-        const REACT_APP_API_URL = process.env.REACT_APP_REACT_APP_API_URL;
+        const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
         try {
             const response = await axios.get(`${REACT_APP_API_URL}/phone/${phoneNumber}`);
             setSimDetails(response.data);
