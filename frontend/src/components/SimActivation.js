@@ -8,11 +8,11 @@ const SimActivation = () => {
     const [simDetails, setSimDetails] = useState(null);
 
     const handleActivate = async () => {
-        const API_URL = process.env.REACT_APP_API_URL;
+        const REACT_APP_API_URL = process.env.REACT_APP_REACT_APP_API_URL;
         try {
-            const response = await axios.get(`${API_URL}/phone/${phoneNumber}`);
+            const response = await axios.get(`${REACT_APP_API_URL}/phone/${phoneNumber}`);
             if (response.data) {
-                const simResponse = await axios.post(`${API_URL}/activate`, { simNumber: response.data.simNumber });
+                const simResponse = await axios.post(`${REACT_APP_API_URL}/activate`, { simNumber: response.data.simNumber });
                 setMessage(`SIM activated successfully: ${simResponse.data.simNumber}`);
                 fetchSimDetails(phoneNumber);
             }
@@ -25,7 +25,7 @@ const SimActivation = () => {
                     activationDate: new Date(),
                 };
                 try {
-                    const createResponse = await axios.post(`${API_URL}`, newSim);
+                    const createResponse = await axios.post(`${REACT_APP_API_URL}`, newSim);
                     setMessage(`New SIM created and activated: ${createResponse.data.simNumber}`);
                     fetchSimDetails(phoneNumber);
                 } catch (createError) {
@@ -38,11 +38,11 @@ const SimActivation = () => {
     };
 
     const handleDeactivate = async () => {
-        const API_URL = process.env.REACT_APP_API_URL;
+        const REACT_APP_API_URL = process.env.REACT_APP_REACT_APP_API_URL;
         try {
-            const response = await axios.get(`${API_URL}/phone/${phoneNumber}`);
+            const response = await axios.get(`${REACT_APP_API_URL}/phone/${phoneNumber}`);
             if (response.data) {
-                const simResponse = await axios.post(`${API_URL}/deactivate`, { simNumber: response.data.simNumber });
+                const simResponse = await axios.post(`${REACT_APP_API_URL}/deactivate`, { simNumber: response.data.simNumber });
                 setMessage(`SIM deactivated successfully: ${simResponse.data.simNumber}`);
                 fetchSimDetails(phoneNumber);
             }
@@ -52,9 +52,9 @@ const SimActivation = () => {
     };
 
     const fetchSimDetails = async (phoneNumber) => {
-        const API_URL = process.env.REACT_APP_API_URL;
+        const REACT_APP_API_URL = process.env.REACT_APP_REACT_APP_API_URL;
         try {
-            const response = await axios.get(`${API_URL}/phone/${phoneNumber}`);
+            const response = await axios.get(`${REACT_APP_API_URL}/phone/${phoneNumber}`);
             setSimDetails(response.data);
         } catch (error) {
             setSimDetails(null);
