@@ -1,0 +1,77 @@
+.container {
+    width: 80%;
+    margin: 5vh auto; 
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    background-color: #fff; 
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem; 
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    width: 100%;
+}
+
+button {
+    padding: 0.5rem 1rem; 
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    background-color: green; 
+    color: white;
+}
+
+button.edit {
+    background-color: #007BFF; 
+    color: white;
+}
+
+button.delete {
+    background-color: #FF4136; 
+    color: white;
+}
+
+button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+td:last-child {
+    text-align: center;
+}
+
+tr input {
+    margin-bottom: 0.5rem; 
+}
+
+tr:hover {
+    background-color: inherit;
+}
