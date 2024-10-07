@@ -6,7 +6,7 @@ const SimDeactivation = () => {
     const [message, setMessage] = useState('');
 
     // Hard-coded API URL
-    const API_URL = 'https://sim-6iwp.onrender.com';
+    const API_URL = 'https://sim-6iwp.onrender.com/api/sims';
 
     const handleDeactivate = async () => {
         try {
