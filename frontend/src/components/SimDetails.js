@@ -8,7 +8,7 @@ const SimDetails = () => {
     const [error, setError] = useState('');
 
     const handleFetchDetails = async () => {
-        const REACT_APP_API_URL = process.env.REACT_APP_REACT_APP_API_URL || 'http://localhost:5000/api/sims';
+        const REACT_APP_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/sims';
         try {
             const response = await axios.get(`${REACT_APP_API_URL}/phone/${simNumber}`);
             setSimData(response.data);
