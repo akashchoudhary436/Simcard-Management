@@ -5,28 +5,34 @@ const SimActivation = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [message, setMessage] = useState('');
     const [simDetails, setSimDetails] = useState(null);
+    const [error, setError] = useState(''); 
     
-    // Hard-coded API URL
-    const API_URL = 'https://sim-6iwp.onrender.com/api/sims';
+  
+    const API_URL = process.env.REACT_APP_API_URL;
 
     const handleActivate = async () => {
+     
+        setMessage('');
+        setError('');
+
+      
         if (!phoneNumber) {
-            setMessage('Phone number is required.');
-            return; // Exit early if phone number is not provided
+            setError('Phone number is required.'); 
+            return; 
         }
 
         try {
-            // Check if the SIM exists by phone number
+           
             const response = await axios.get(`${API_URL}/phone/${phoneNumber}`);
             if (response.data) {
-                // If it exists, activate the SIM
+             
                 const simResponse = await axios.post(`${API_URL}/activate`, { simNumber: response.data.simNumber });
                 setMessage(`SIM activated successfully: ${simResponse.data.simNumber}`);
                 fetchSimDetails(phoneNumber);
             }
         } catch (error) {
             if (error.response && error.response.status === 404) {
-                // If not found, create a new SIM and activate it
+              
                 const newSim = {
                     simNumber: generateSimNumber(),
                     phoneNumber: phoneNumber,
@@ -68,8 +74,10 @@ const SimActivation = () => {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="Enter Phone Number"
+                required 
             />
             <button onClick={handleActivate}>Activate SIM</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
             {message && <p>{message}</p>}
             {simDetails && (
                 <div>

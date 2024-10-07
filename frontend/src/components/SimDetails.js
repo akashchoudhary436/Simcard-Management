@@ -6,8 +6,8 @@ const SimDetails = () => {
     const [simData, setSimData] = useState(null);
     const [error, setError] = useState('');
 
-    // Hard-coded API URL
-    const API_URL = 'https://sim-6iwp.onrender.com/api/sims';
+
+    const API_URL = process.env.REACT_APP_API_URL;
 
     const handleFetchDetails = async () => {
         try {
