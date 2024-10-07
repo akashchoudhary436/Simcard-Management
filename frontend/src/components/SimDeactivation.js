@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -6,12 +5,14 @@ const SimDeactivation = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [message, setMessage] = useState('');
 
+    // Hard-coded API URL
+    const API_URL = 'https://sim-6iwp.onrender.com';
+
     const handleDeactivate = async () => {
-        const REACT_APP_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/sims';
         try {
-            const response = await axios.get(`${REACT_APP_API_URL}/phone/${phoneNumber}`);
+            const response = await axios.get(`${API_URL}/phone/${phoneNumber}`);
             if (response.data) {
-                const simResponse = await axios.post(`${REACT_APP_API_URL}/deactivate`, { simNumber: response.data.simNumber });
+                const simResponse = await axios.post(`${API_URL}/deactivate`, { simNumber: response.data.simNumber });
                 setMessage(`SIM deactivated successfully: ${simResponse.data.simNumber}`);
             }
         } catch (error) {

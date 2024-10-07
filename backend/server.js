@@ -7,11 +7,11 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Middleware
+app.use(express.json());
+app.use(cors());
 
-app.use(express.json()); 
-app.use(cors()); 
-
-
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -19,17 +19,17 @@ mongoose.connect(process.env.MONGO_URI, {
     .then(() => console.log('MongoDB connected!'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-
+// SIM Schema
 const simSchema = new mongoose.Schema({
-    simNumber: { type: String, unique: true, required: true }, 
-    phoneNumber: { type: String, required: true }, 
+    simNumber: { type: String, unique: true, required: true },
+    phoneNumber: { type: String, required: true },
     status: { type: String, enum: ['active', 'inactive'], default: 'inactive' },
     activationDate: { type: Date }
 });
 
 const Sim = mongoose.model('Sim', simSchema);
 
-
+// API Routes
 app.post('/api/sims', async (req, res) => {
     const { simNumber, phoneNumber } = req.body; 
     try {
@@ -53,7 +53,6 @@ app.post('/api/sims', async (req, res) => {
     }
 });
 
-
 app.post('/api/sims/activate', async (req, res) => {
     const { simNumber } = req.body;
     try {
@@ -71,7 +70,6 @@ app.post('/api/sims/activate', async (req, res) => {
     }
 });
 
-
 app.post('/api/sims/deactivate', async (req, res) => {
     const { simNumber } = req.body;
     try {
@@ -88,7 +86,6 @@ app.post('/api/sims/deactivate', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
-
 
 app.get('/api/sims', async (req, res) => {
     try {
@@ -112,12 +109,13 @@ app.get('/api/sims/phone/:phoneNumber', async (req, res) => {
     }
 });
 
-
+// Serve frontend assets
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
+// Handle all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
-
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Start the server
+app.listen(PORT, () => console.log(`Server running on https://sim-6iwp.onrender.com`));

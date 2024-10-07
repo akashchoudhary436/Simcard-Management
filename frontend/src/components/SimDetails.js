@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -7,10 +6,12 @@ const SimDetails = () => {
     const [simData, setSimData] = useState(null);
     const [error, setError] = useState('');
 
+    // Hard-coded API URL
+    const API_URL = 'https://sim-6iwp.onrender.com';
+
     const handleFetchDetails = async () => {
-        const REACT_APP_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/sims';
         try {
-            const response = await axios.get(`${REACT_APP_API_URL}/phone/${simNumber}`);
+            const response = await axios.get(`${API_URL}/phone/${simNumber}`);
             setSimData(response.data);
             setError('');
         } catch (err) {
